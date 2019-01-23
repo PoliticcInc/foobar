@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "start": "node lib/index.js",
     "build": "babel src -d build"
   },
   "dependencies": {
