@@ -1,0 +1,32 @@
+---
+dist: trusty
+language: python
+
+python:
+  - "3.6"
+
+cache:
+  directories:
+    - $HOME/.cache/yarn
+    - $HOME/.cache/pip
+
+before_install:
+  - nvm install 8.10
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+install:
+  - yarn global add sentry-cli-binary
+  - yarn install
+
+script:
+  - pip install -r ./tools/requirements.txt
+  - yarn run build
+  - test $TRAVIS_PULL_REQUEST && yarn install --production
+  - test $TRAVIS_PULL_REQUEST
+  # - test $TRAVIS_PULL_REQUEST && invoke package
+
+
+branches:
+  only:
+  - master
